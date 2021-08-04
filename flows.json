@@ -1363,5 +1363,85 @@
                 "b8dde93.abf1418"
             ]
         ]
+    },
+    {
+        "id": "cef7f794a3e35288",
+        "type": "inject",
+        "z": "458dc5a9.97c4ec",
+        "name": "Docker CAMOUT get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://192.168.1.113:8601/Interface/LPR/GetLastRecordData?Camera=CAMOUT&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 180,
+        "y": 620,
+        "wires": [
+            [
+                "dfd7ad98.5280f"
+            ]
+        ]
+    },
+    {
+        "id": "d6c5aabb853eb469",
+        "type": "inject",
+        "z": "458dc5a9.97c4ec",
+        "name": "Docker CAMIN get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://192.168.1.113:8601/Interface/LPR/GetLastRecordData?Camera=CAMIN&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "70154cd4.de1444"
+            ]
+        ]
+    },
+    {
+        "id": "f198362c6ea0bbc4",
+        "type": "tcp in",
+        "z": "458dc5a9.97c4ec",
+        "name": "Docker Node-RED Client",
+        "server": "client",
+        "host": "192.168.1.113",
+        "port": "46789",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "\\n",
+        "topic": "text2",
+        "base64": false,
+        "x": 1270,
+        "y": 580,
+        "wires": [
+            [
+                "703a8806.7647a8",
+                "888d839.1578c8"
+            ]
+        ]
     }
 ]
