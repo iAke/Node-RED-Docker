@@ -7,6 +7,26 @@
         "info": ""
     },
     {
+        "id": "458dc5a9.97c4ec",
+        "type": "tab",
+        "label": "LPR",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9cb2406a.8026b",
+        "type": "websocket-listener",
+        "path": "/ws/request",
+        "wholemsg": "false"
+    },
+    {
+        "id": "3a960f68.dfb54",
+        "type": "websocket-client",
+        "path": "ws://localhost:1880/ws/request",
+        "tls": "",
+        "wholemsg": "false"
+    },
+    {
         "id": "8afb2538c43e1cdf",
         "type": "inject",
         "z": "3af82246.3634ae",
@@ -103,6 +123,1244 @@
         "wires": [
             [
                 "c2380ca8.0463"
+            ]
+        ]
+    },
+    {
+        "id": "b36aa30.3a7276",
+        "type": "http request",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "x": 590,
+        "y": 180,
+        "wires": [
+            [
+                "e1ed0ad1.d04fa8"
+            ]
+        ]
+    },
+    {
+        "id": "70154cd4.de1444",
+        "type": "change",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 180,
+        "wires": [
+            [
+                "b36aa30.3a7276"
+            ]
+        ]
+    },
+    {
+        "id": "1ef9987c.956c78",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "e1ed0ad1.d04fa8",
+        "type": "xml",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 770,
+        "y": 180,
+        "wires": [
+            [
+                "1ef9987c.956c78",
+                "f76be03c.8a1fa"
+            ]
+        ]
+    },
+    {
+        "id": "c92dacb8.cd249",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f76be03c.8a1fa",
+        "type": "function",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "func": "msg.temp = msg.payload;\nmsg.payload = {};\n\nmsg.payload.DateTime = msg.temp.Response.Data[0].RecordData[0].DateTime[0];\nif(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"CAMIN\"){\n    msg.payload.CameraIP = \"192.168.1.111\";\n}\nelse if(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"CAMOUT\"){\n    msg.payload.CameraIP = \"192.168.1.112\"; \n}\nmsg.payload.PlateText = msg.temp.Response.Data[0].RecordData[0].LicensePlate[0];\nmsg.payload.PlateProvince = msg.temp.Response.Data[0].RecordData[0].Country[0];\n\nmsg.payload.CarMake = msg.temp.Response.Data[0].RecordData[0].Manufacturer[0];\nmsg.payload.CarModel =  msg.temp.Response.Data[0].RecordData[0].VehicleType[0];\nmsg.payload.CarColor = msg.temp.Response.Data[0].RecordData[0].VehicleColor[0];\n\nif(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"CAMIN\"){\n    msg.payload.Direction = \"IN\"\n}\nelse if(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"CAMOUT\"){\n    msg.payload.Direction = \"OUT\"\n}\nmsg.payload.Location = \"Gate1\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 280,
+        "wires": [
+            [
+                "fdfec23b.528b",
+                "7ef1cf22.4899d"
+            ]
+        ]
+    },
+    {
+        "id": "6a0a8abc.601f64",
+        "type": "comment",
+        "z": "458dc5a9.97c4ec",
+        "name": "REF",
+        "info": "JSON RPC 2.0 Websocket client and server demo\n\nhttps://flows.nodered.org/flow/403084304083feffc17d65b507f70c0a",
+        "x": 90,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "b8edce4.ccd31b",
+        "type": "websocket in",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "server": "9cb2406a.8026b",
+        "client": "",
+        "x": 120,
+        "y": 1520,
+        "wires": [
+            [
+                "dcfc3e96.f1e1b8"
+            ]
+        ]
+    },
+    {
+        "id": "42c48f04.f2198",
+        "type": "websocket out",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "server": "9cb2406a.8026b",
+        "client": "",
+        "x": 680,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "bb8e83fc.b8afe",
+        "type": "change",
+        "z": "458dc5a9.97c4ec",
+        "name": "result",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"jsonrpc\": \"2.0\",\t    \"result\": {\t        \"ack\": $millis()\t    },\t    \"id\": payload.id\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 1520,
+        "wires": [
+            [
+                "42c48f04.f2198"
+            ]
+        ]
+    },
+    {
+        "id": "9736c3b8.651ad",
+        "type": "websocket out",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "server": "",
+        "client": "3a960f68.dfb54",
+        "x": 400,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "ec2054f9.08769",
+        "type": "inject",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"jsonrpc\":\"2.0\",\"method\":\"playerTap\",\"params\":{\"playerId\":\"2323232323\"},\"id\":1}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "string"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"jsonrpc\":\"2.0\",\"method\":\"playerTap\",\"params\":{\"playerId\":\"2323232323\"},\"id\":1}",
+        "payloadType": "json",
+        "x": 110,
+        "y": 1320,
+        "wires": [
+            [
+                "9736c3b8.651ad"
+            ]
+        ]
+    },
+    {
+        "id": "a2000ce8.ec378",
+        "type": "websocket in",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "server": "",
+        "client": "3a960f68.dfb54",
+        "x": 180,
+        "y": 1380,
+        "wires": [
+            [
+                "cb80b54b.3468c"
+            ]
+        ]
+    },
+    {
+        "id": "33d59caf.687ccc",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 570,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "569c2eb9.8c11c",
+        "type": "comment",
+        "z": "458dc5a9.97c4ec",
+        "name": "Server",
+        "info": "",
+        "x": 90,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "6eea9aec.9e331c",
+        "type": "comment",
+        "z": "458dc5a9.97c4ec",
+        "name": "Client",
+        "info": "",
+        "x": 90,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "cb80b54b.3468c",
+        "type": "json",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 410,
+        "y": 1380,
+        "wires": [
+            [
+                "33d59caf.687ccc"
+            ]
+        ]
+    },
+    {
+        "id": "dcfc3e96.f1e1b8",
+        "type": "json",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 310,
+        "y": 1520,
+        "wires": [
+            [
+                "bb8e83fc.b8afe"
+            ]
+        ]
+    },
+    {
+        "id": "9589286f.d3e008",
+        "type": "function",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "func": "msg.payload =  \"GET / HTTP/1.1\\r\\n\\r\\nHOST: www.google.com\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 1440,
+        "wires": [
+            [
+                "51230fc0.241ed"
+            ]
+        ]
+    },
+    {
+        "id": "51230fc0.241ed",
+        "type": "tcp request",
+        "z": "458dc5a9.97c4ec",
+        "server": "www.google.com",
+        "port": "80",
+        "out": "time",
+        "splitc": "1000",
+        "name": "",
+        "x": 1290,
+        "y": 1500,
+        "wires": [
+            [
+                "46a04614.226bb8"
+            ]
+        ]
+    },
+    {
+        "id": "46a04614.226bb8",
+        "type": "function",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "func": "msg.payload = msg.payload.toString('utf8');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1400,
+        "y": 1560,
+        "wires": [
+            [
+                "b06fb350.2972b"
+            ]
+        ]
+    },
+    {
+        "id": "b06fb350.2972b",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1490,
+        "y": 1620,
+        "wires": []
+    },
+    {
+        "id": "ba10088.59479f8",
+        "type": "inject",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1100,
+        "y": 1380,
+        "wires": [
+            [
+                "9589286f.d3e008"
+            ]
+        ]
+    },
+    {
+        "id": "3ed4bf36.7ba27",
+        "type": "tcp in",
+        "z": "458dc5a9.97c4ec",
+        "name": "Server holding connections at :1025",
+        "server": "server",
+        "host": "",
+        "port": "1025",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "\\n",
+        "topic": "text",
+        "base64": false,
+        "x": 1280,
+        "y": 180,
+        "wires": [
+            [
+                "c68831a2.4f549",
+                "a7e6ccd4.249e2",
+                "8bec32d8.6ebf"
+            ]
+        ]
+    },
+    {
+        "id": "8a6ca03.647916",
+        "type": "tcp out",
+        "z": "458dc5a9.97c4ec",
+        "host": "",
+        "port": "",
+        "beserver": "reply",
+        "base64": false,
+        "end": false,
+        "name": "reply: all open connections will be messaged",
+        "x": 2310,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "3cbd8016.631eb",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "show incomming text at the debug tab",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1810,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "644384a1.4d65dc",
+        "type": "inject",
+        "z": "458dc5a9.97c4ec",
+        "name": "button: create a msg",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "Hello from Node-RED server.",
+        "payloadType": "str",
+        "x": 1980,
+        "y": 100,
+        "wires": [
+            [
+                "3bb274cd.0dd4cc"
+            ]
+        ]
+    },
+    {
+        "id": "4876d621.c98708",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "show incomming text at the debug tab",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1790,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "aa0964e.2104e98",
+        "type": "inject",
+        "z": "458dc5a9.97c4ec",
+        "name": "button: create a msg",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "{     \"DateTime\": \"2021-08-03 09:49:26.672\",     \"CameraIP\": \"192.168.1.112\",     \"PlateText\": \"วว128\",     \"PlateProvince\": \"Thailand (Bangkok)\",     \"CarMake\": \"\",     \"CarModel\": \"\",     \"CarColor\": \"-1\",     \"Direction\": \"OUT\",     \"Location\": \"Gate1\" }",
+        "payloadType": "json",
+        "x": 110,
+        "y": 900,
+        "wires": [
+            [
+                "cb71f59d.9ae368",
+                "bad0a551.5bc4d8"
+            ]
+        ]
+    },
+    {
+        "id": "b8dde93.abf1418",
+        "type": "tcp out",
+        "z": "458dc5a9.97c4ec",
+        "host": "",
+        "port": "",
+        "beserver": "reply",
+        "base64": false,
+        "end": false,
+        "name": "reply: the server will get messaged",
+        "x": 2040,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "1f0a0c3d.2f7ed4",
+        "type": "tcp in",
+        "z": "458dc5a9.97c4ec",
+        "name": "Node-RED Client",
+        "server": "client",
+        "host": "localhost",
+        "port": "46789",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "\\n",
+        "topic": "text2",
+        "base64": false,
+        "x": 1240,
+        "y": 620,
+        "wires": [
+            [
+                "888d839.1578c8",
+                "703a8806.7647a8"
+            ]
+        ]
+    },
+    {
+        "id": "888d839.1578c8",
+        "type": "template",
+        "z": "458dc5a9.97c4ec",
+        "name": "\"CLIENT GOT:\" +",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "CLIENT GOT:\n{{payload}}",
+        "x": 1450,
+        "y": 680,
+        "wires": [
+            [
+                "4876d621.c98708"
+            ]
+        ]
+    },
+    {
+        "id": "c68831a2.4f549",
+        "type": "template",
+        "z": "458dc5a9.97c4ec",
+        "name": "\"SERVER GOT:\" +",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "SERVER GOT:\n{{payload}}",
+        "x": 1590,
+        "y": 240,
+        "wires": [
+            [
+                "3cbd8016.631eb"
+            ]
+        ]
+    },
+    {
+        "id": "a7e6ccd4.249e2",
+        "type": "template",
+        "z": "458dc5a9.97c4ec",
+        "name": "modify received msg to be send back",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "You were sending: {{payload}}\n",
+        "x": 1810,
+        "y": 180,
+        "wires": [
+            [
+                "8a6ca03.647916"
+            ]
+        ]
+    },
+    {
+        "id": "bda7c3b9.d474e",
+        "type": "comment",
+        "z": "458dc5a9.97c4ec",
+        "name": "Telnet client: open your command prompt, and type: `telnet localhost 1025` and start typing",
+        "info": "Telnet client: open your command prompt, and type: `telnet localhost 1025` and start typing",
+        "x": 1480,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "b2b36f52.3226f",
+        "type": "tcp in",
+        "z": "458dc5a9.97c4ec",
+        "name": "Proxy: fixing client with no NL :1026",
+        "server": "server",
+        "host": "",
+        "port": "1026",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "",
+        "topic": "text",
+        "base64": false,
+        "x": 1300,
+        "y": 440,
+        "wires": [
+            [
+                "3df93666.9d411a"
+            ]
+        ]
+    },
+    {
+        "id": "3df93666.9d411a",
+        "type": "template",
+        "z": "458dc5a9.97c4ec",
+        "name": "fix incomming message with a newline",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload}}\n",
+        "x": 1610,
+        "y": 440,
+        "wires": [
+            [
+                "5efdf60a.e103f8"
+            ]
+        ]
+    },
+    {
+        "id": "606fafde.eaf2d",
+        "type": "template",
+        "z": "458dc5a9.97c4ec",
+        "name": "+ newline",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload}}\n",
+        "x": 1500,
+        "y": 580,
+        "wires": [
+            [
+                "b8dde93.abf1418"
+            ]
+        ]
+    },
+    {
+        "id": "3bb274cd.0dd4cc",
+        "type": "template",
+        "z": "458dc5a9.97c4ec",
+        "name": "+ newline",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload}}\n",
+        "x": 2140,
+        "y": 100,
+        "wires": [
+            [
+                "8a6ca03.647916"
+            ]
+        ]
+    },
+    {
+        "id": "5efdf60a.e103f8",
+        "type": "tcp request",
+        "z": "458dc5a9.97c4ec",
+        "server": "localhost",
+        "port": "1025",
+        "out": "time",
+        "splitc": "0",
+        "name": "connect the Node-RED server",
+        "x": 1950,
+        "y": 440,
+        "wires": [
+            [
+                "5d629070.fcdd7"
+            ]
+        ]
+    },
+    {
+        "id": "5d629070.fcdd7",
+        "type": "tcp out",
+        "z": "458dc5a9.97c4ec",
+        "host": "",
+        "port": "",
+        "beserver": "reply",
+        "base64": false,
+        "end": false,
+        "name": "reply: any answer back to the client",
+        "x": 2280,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "8b055424.0e3648",
+        "type": "inject",
+        "z": "458dc5a9.97c4ec",
+        "name": "button: open telnet to 1025 (windows)",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 2030,
+        "y": 800,
+        "wires": [
+            [
+                "feff714a.33ac4",
+                "d3fd134c.3a1cb"
+            ]
+        ]
+    },
+    {
+        "id": "feff714a.33ac4",
+        "type": "exec",
+        "z": "458dc5a9.97c4ec",
+        "command": "start",
+        "addpay": false,
+        "append": "telnet localhost 1025",
+        "useSpawn": false,
+        "timer": "",
+        "name": "start telnet",
+        "x": 2270,
+        "y": 800,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d3fd134c.3a1cb",
+        "type": "delay",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1200",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 2280,
+        "y": 860,
+        "wires": [
+            [
+                "a134e318.cbfa7"
+            ]
+        ]
+    },
+    {
+        "id": "a134e318.cbfa7",
+        "type": "exec",
+        "z": "458dc5a9.97c4ec",
+        "command": "msg",
+        "addpay": false,
+        "append": "%username% \"start by pressing enter\"",
+        "useSpawn": false,
+        "timer": "",
+        "name": "msg box",
+        "x": 2260,
+        "y": 900,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "703a8806.7647a8",
+        "type": "template",
+        "z": "458dc5a9.97c4ec",
+        "name": "no msg back, we do behave!",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "",
+        "x": 1760,
+        "y": 620,
+        "wires": [
+            [
+                "b8dde93.abf1418"
+            ]
+        ]
+    },
+    {
+        "id": "d33bea5f.0f2fe8",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "8bec32d8.6ebf",
+        "type": "function",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "func": "msg.payload = JSON.parse(JSON.stringify(msg.payload))\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1320,
+        "y": 280,
+        "wires": [
+            [
+                "d33bea5f.0f2fe8"
+            ]
+        ]
+    },
+    {
+        "id": "fdfec23b.528b",
+        "type": "json",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 710,
+        "y": 280,
+        "wires": [
+            [
+                "c92dacb8.cd249",
+                "68a33451.578a6c",
+                "83c6c9a33b4e532a"
+            ]
+        ]
+    },
+    {
+        "id": "68a33451.578a6c",
+        "type": "file",
+        "z": "458dc5a9.97c4ec",
+        "name": "FILE",
+        "filename": "C:\\Users\\FR-TEST\\test.txt",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 890,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7ef1cf22.4899d",
+        "type": "xml",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 630,
+        "y": 360,
+        "wires": [
+            [
+                "56cfbeff.3bfcc"
+            ]
+        ]
+    },
+    {
+        "id": "56cfbeff.3bfcc",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "8ad01823.3b2f88",
+        "type": "inject",
+        "z": "458dc5a9.97c4ec",
+        "name": "CAMIN get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://127.0.0.1:8601/Interface/LPR/GetLastRecordData?Camera=CAMIN&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "70154cd4.de1444"
+            ]
+        ]
+    },
+    {
+        "id": "8325404e.87c5d",
+        "type": "inject",
+        "z": "458dc5a9.97c4ec",
+        "name": "CAMOUT get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://127.0.0.1:8601/Interface/LPR/GetLastRecordData?Camera=CAMOUT&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 150,
+        "y": 540,
+        "wires": [
+            [
+                "dfd7ad98.5280f"
+            ]
+        ]
+    },
+    {
+        "id": "cb71f59d.9ae368",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "bad0a551.5bc4d8",
+        "type": "json",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 1110,
+        "y": 900,
+        "wires": [
+            [
+                "606fafde.eaf2d"
+            ]
+        ]
+    },
+    {
+        "id": "d0db2d9c.6e1cc",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1610,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "8135c8c2.f3f378",
+        "type": "tcp in",
+        "z": "458dc5a9.97c4ec",
+        "name": "Server holding connections at :1025 > 46789",
+        "server": "server",
+        "host": "",
+        "port": "46789",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "",
+        "topic": "text",
+        "base64": false,
+        "x": 1310,
+        "y": 60,
+        "wires": [
+            [
+                "d0db2d9c.6e1cc"
+            ]
+        ]
+    },
+    {
+        "id": "75bc751f.35c24c",
+        "type": "http request",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "x": 590,
+        "y": 540,
+        "wires": [
+            [
+                "9c8b9dff.4f0b9"
+            ]
+        ]
+    },
+    {
+        "id": "dfd7ad98.5280f",
+        "type": "change",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 540,
+        "wires": [
+            [
+                "75bc751f.35c24c"
+            ]
+        ]
+    },
+    {
+        "id": "bc29ca2c.c86588",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "9c8b9dff.4f0b9",
+        "type": "xml",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 770,
+        "y": 540,
+        "wires": [
+            [
+                "bc29ca2c.c86588",
+                "132aba6d.591d46"
+            ]
+        ]
+    },
+    {
+        "id": "b9971132.b1161",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "132aba6d.591d46",
+        "type": "function",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "func": "msg.temp = msg.payload;\nmsg.payload = {};\n\nmsg.payload.DateTime = msg.temp.Response.Data[0].RecordData[0].DateTime[0];\nif(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"CAMIN\"){\n    msg.payload.CameraIP = \"192.168.1.111\";\n}\nelse if(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"CAMOUT\"){\n    msg.payload.CameraIP = \"192.168.1.112\"; \n}\nmsg.payload.PlateText = msg.temp.Response.Data[0].RecordData[0].LicensePlate[0];\nmsg.payload.PlateProvince = msg.temp.Response.Data[0].RecordData[0].Country[0];\n\nmsg.payload.CarMake = msg.temp.Response.Data[0].RecordData[0].Manufacturer[0];\nmsg.payload.CarModel =  msg.temp.Response.Data[0].RecordData[0].VehicleType[0];\nmsg.payload.CarColor = msg.temp.Response.Data[0].RecordData[0].VehicleColor[0];\n\nif(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"CAMIN\"){\n    msg.payload.Direction = \"IN\"\n}\nelse if(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"CAMOUT\"){\n    msg.payload.Direction = \"OUT\"\n}\nmsg.payload.Location = \"Gate1\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 640,
+        "wires": [
+            [
+                "c36a1ad3.ec5f88",
+                "7b92102c.faa7e"
+            ]
+        ]
+    },
+    {
+        "id": "c36a1ad3.ec5f88",
+        "type": "json",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 710,
+        "y": 640,
+        "wires": [
+            [
+                "b9971132.b1161",
+                "aec320fd.590d8",
+                "83c6c9a33b4e532a"
+            ]
+        ]
+    },
+    {
+        "id": "aec320fd.590d8",
+        "type": "file",
+        "z": "458dc5a9.97c4ec",
+        "name": "FILE",
+        "filename": "C:\\Users\\FR-TEST\\test.txt",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 890,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7b92102c.faa7e",
+        "type": "xml",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 630,
+        "y": 720,
+        "wires": [
+            [
+                "54c8f503.de95cc"
+            ]
+        ]
+    },
+    {
+        "id": "54c8f503.de95cc",
+        "type": "debug",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "83c6c9a33b4e532a",
+        "type": "encode-utf16le",
+        "z": "458dc5a9.97c4ec",
+        "name": "",
+        "x": 1240,
+        "y": 520,
+        "wires": [
+            [
+                "b8dde93.abf1418"
             ]
         ]
     }
