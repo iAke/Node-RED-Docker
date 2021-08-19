@@ -1,15 +1,15 @@
 [
     {
-        "id": "3af82246.3634ae",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": ""
-    },
-    {
         "id": "458dc5a9.97c4ec",
         "type": "tab",
         "label": "LPR",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "1b6e8e29077ebd4d",
+        "type": "tab",
+        "label": "LPR-GC",
         "disabled": false,
         "info": ""
     },
@@ -25,106 +25,6 @@
         "path": "ws://localhost:1880/ws/request",
         "tls": "",
         "wholemsg": "false"
-    },
-    {
-        "id": "8afb2538c43e1cdf",
-        "type": "inject",
-        "z": "3af82246.3634ae",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 333,
-        "y": 333,
-        "wires": [
-            [
-                "a59a049d86856704"
-            ]
-        ]
-    },
-    {
-        "id": "a59a049d86856704",
-        "type": "debug",
-        "z": "3af82246.3634ae",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 570,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "55dd0376.f7c64c",
-        "type": "http in",
-        "z": "3af82246.3634ae",
-        "name": "",
-        "url": "/hello",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 300,
-        "y": 440,
-        "wires": [
-            [
-                "c656aba7.944288"
-            ]
-        ]
-    },
-    {
-        "id": "c2380ca8.0463",
-        "type": "http response",
-        "z": "3af82246.3634ae",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 640,
-        "y": 440,
-        "wires": []
-    },
-    {
-        "id": "c656aba7.944288",
-        "type": "change",
-        "z": "3af82246.3634ae",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"text\":\"Hello\"}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 470,
-        "y": 440,
-        "wires": [
-            [
-                "c2380ca8.0463"
-            ]
-        ]
     },
     {
         "id": "b36aa30.3a7276",
@@ -1428,6 +1328,1020 @@
             [
                 "703a8806.7647a8",
                 "888d839.1578c8"
+            ]
+        ]
+    },
+    {
+        "id": "06a0cb7194407483",
+        "type": "http request",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "x": 590,
+        "y": 180,
+        "wires": [
+            [
+                "bdf4c8a234269dd3"
+            ]
+        ]
+    },
+    {
+        "id": "9c83d994a9e3d160",
+        "type": "change",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 180,
+        "wires": [
+            [
+                "06a0cb7194407483"
+            ]
+        ]
+    },
+    {
+        "id": "26c77c2df584b7b3",
+        "type": "debug",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "bdf4c8a234269dd3",
+        "type": "xml",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 770,
+        "y": 180,
+        "wires": [
+            [
+                "26c77c2df584b7b3",
+                "ac21ae2b422feb4a"
+            ]
+        ]
+    },
+    {
+        "id": "e7c8f4869a57bdd4",
+        "type": "debug",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "ac21ae2b422feb4a",
+        "type": "function",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "func": "msg.temp = msg.payload;\nmsg.payload = {};\n\nmsg.payload.DateTime = msg.temp.Response.Data[0].RecordData[0].DateTime[0];\nif(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-IN\"){\n    msg.payload.CameraIP = \"172.28.13.21\";\n}\nelse if(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-OUT\"){\n    msg.payload.CameraIP = \"172.28.13.22\"; \n}\nmsg.payload.PlateText = msg.temp.Response.Data[0].RecordData[0].LicensePlate[0];\nmsg.payload.PlateProvince = msg.temp.Response.Data[0].RecordData[0].Country[0];\n\nmsg.payload.CarMake = msg.temp.Response.Data[0].RecordData[0].Manufacturer[0];\nmsg.payload.CarModel =  msg.temp.Response.Data[0].RecordData[0].VehicleType[0];\nmsg.payload.CarColor = msg.temp.Response.Data[0].RecordData[0].VehicleColor[0];\n\nif(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-IN\"){\n    msg.payload.Direction = \"IN\"\n}\nelse if(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-OUT\"){\n    msg.payload.Direction = \"OUT\"\n}\nmsg.payload.Location = \"GC3-MG\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 280,
+        "wires": [
+            [
+                "ea80bf0be061d6b9",
+                "a14787e4d2adb902"
+            ]
+        ]
+    },
+    {
+        "id": "8893394547dd93ef",
+        "type": "tcp in",
+        "z": "1b6e8e29077ebd4d",
+        "name": "Server holding connections at :1025",
+        "server": "server",
+        "host": "",
+        "port": "1025",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "\\n",
+        "topic": "text",
+        "base64": false,
+        "x": 1280,
+        "y": 180,
+        "wires": [
+            [
+                "112a3cfc8027f44f",
+                "f2f67f305619276d",
+                "d2c99eb3d0433de4"
+            ]
+        ]
+    },
+    {
+        "id": "e146a4ae822a6d11",
+        "type": "tcp out",
+        "z": "1b6e8e29077ebd4d",
+        "host": "",
+        "port": "",
+        "beserver": "reply",
+        "base64": false,
+        "end": false,
+        "name": "reply: all open connections will be messaged",
+        "x": 2310,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "5f1dbb6bab8d8fc6",
+        "type": "debug",
+        "z": "1b6e8e29077ebd4d",
+        "name": "show incomming text at the debug tab",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1810,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "0b7e042ee61bc77c",
+        "type": "inject",
+        "z": "1b6e8e29077ebd4d",
+        "name": "button: create a msg",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "Hello from Node-RED server.",
+        "payloadType": "str",
+        "x": 1980,
+        "y": 100,
+        "wires": [
+            [
+                "f77d222d5d29b348"
+            ]
+        ]
+    },
+    {
+        "id": "420113efc2c08916",
+        "type": "debug",
+        "z": "1b6e8e29077ebd4d",
+        "name": "show incomming text at the debug tab",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1790,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "041f2b7f7f6c441a",
+        "type": "inject",
+        "z": "1b6e8e29077ebd4d",
+        "name": "button: create a msg",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "{     \"DateTime\": \"2021-08-03 09:49:26.672\",     \"CameraIP\": \"192.168.1.112\",     \"PlateText\": \"วว128\",     \"PlateProvince\": \"Thailand (Bangkok)\",     \"CarMake\": \"\",     \"CarModel\": \"\",     \"CarColor\": \"-1\",     \"Direction\": \"OUT\",     \"Location\": \"Gate1\" }",
+        "payloadType": "json",
+        "x": 110,
+        "y": 900,
+        "wires": [
+            [
+                "fc93a05eaae27125",
+                "595fa17aed0a5950"
+            ]
+        ]
+    },
+    {
+        "id": "6f125a982ffd5a88",
+        "type": "tcp out",
+        "z": "1b6e8e29077ebd4d",
+        "host": "",
+        "port": "",
+        "beserver": "reply",
+        "base64": false,
+        "end": false,
+        "name": "reply: the server will get messaged",
+        "x": 1640,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "d31bd15859bd4421",
+        "type": "tcp in",
+        "z": "1b6e8e29077ebd4d",
+        "name": "Node-RED Client",
+        "server": "client",
+        "host": "localhost",
+        "port": "46789",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "\\n",
+        "topic": "text2",
+        "base64": false,
+        "x": 1240,
+        "y": 620,
+        "wires": [
+            [
+                "5879d938757dd550",
+                "ed1ab40ccdf3f687"
+            ]
+        ]
+    },
+    {
+        "id": "5879d938757dd550",
+        "type": "template",
+        "z": "1b6e8e29077ebd4d",
+        "name": "\"CLIENT GOT:\" +",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "CLIENT GOT:\n{{payload}}",
+        "x": 1450,
+        "y": 680,
+        "wires": [
+            [
+                "420113efc2c08916"
+            ]
+        ]
+    },
+    {
+        "id": "112a3cfc8027f44f",
+        "type": "template",
+        "z": "1b6e8e29077ebd4d",
+        "name": "\"SERVER GOT:\" +",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "SERVER GOT:\n{{payload}}",
+        "x": 1590,
+        "y": 240,
+        "wires": [
+            [
+                "5f1dbb6bab8d8fc6"
+            ]
+        ]
+    },
+    {
+        "id": "f2f67f305619276d",
+        "type": "template",
+        "z": "1b6e8e29077ebd4d",
+        "name": "modify received msg to be send back",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "You were sending: {{payload}}\n",
+        "x": 1810,
+        "y": 180,
+        "wires": [
+            [
+                "e146a4ae822a6d11"
+            ]
+        ]
+    },
+    {
+        "id": "ce5b3a4e2e1326f5",
+        "type": "comment",
+        "z": "1b6e8e29077ebd4d",
+        "name": "Telnet client: open your command prompt, and type: `telnet localhost 1025` and start typing",
+        "info": "Telnet client: open your command prompt, and type: `telnet localhost 1025` and start typing",
+        "x": 1480,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "1895e1f206b899fa",
+        "type": "tcp in",
+        "z": "1b6e8e29077ebd4d",
+        "name": "Proxy: fixing client with no NL :1026",
+        "server": "server",
+        "host": "",
+        "port": "1026",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "",
+        "topic": "text",
+        "base64": false,
+        "x": 1300,
+        "y": 440,
+        "wires": [
+            [
+                "bc4aa4d9d9a18e8b"
+            ]
+        ]
+    },
+    {
+        "id": "bc4aa4d9d9a18e8b",
+        "type": "template",
+        "z": "1b6e8e29077ebd4d",
+        "name": "fix incomming message with a newline",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload}}\n",
+        "x": 1610,
+        "y": 440,
+        "wires": [
+            [
+                "34c9a8bb309fb663"
+            ]
+        ]
+    },
+    {
+        "id": "f7136b53362f4c61",
+        "type": "template",
+        "z": "1b6e8e29077ebd4d",
+        "name": "+ newline",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload}}\n",
+        "x": 1500,
+        "y": 580,
+        "wires": [
+            [
+                "6f125a982ffd5a88"
+            ]
+        ]
+    },
+    {
+        "id": "f77d222d5d29b348",
+        "type": "template",
+        "z": "1b6e8e29077ebd4d",
+        "name": "+ newline",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload}}\n",
+        "x": 2140,
+        "y": 100,
+        "wires": [
+            [
+                "e146a4ae822a6d11"
+            ]
+        ]
+    },
+    {
+        "id": "34c9a8bb309fb663",
+        "type": "tcp request",
+        "z": "1b6e8e29077ebd4d",
+        "server": "localhost",
+        "port": "1025",
+        "out": "time",
+        "splitc": "0",
+        "name": "connect the Node-RED server",
+        "x": 1950,
+        "y": 440,
+        "wires": [
+            [
+                "0e132d3759215ea3"
+            ]
+        ]
+    },
+    {
+        "id": "0e132d3759215ea3",
+        "type": "tcp out",
+        "z": "1b6e8e29077ebd4d",
+        "host": "",
+        "port": "",
+        "beserver": "reply",
+        "base64": false,
+        "end": false,
+        "name": "reply: any answer back to the client",
+        "x": 2280,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "b63bee359e844916",
+        "type": "inject",
+        "z": "1b6e8e29077ebd4d",
+        "name": "button: open telnet to 1025 (windows)",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 2030,
+        "y": 800,
+        "wires": [
+            [
+                "2fcce8c217d1902a",
+                "a8e26a3c134f0410"
+            ]
+        ]
+    },
+    {
+        "id": "2fcce8c217d1902a",
+        "type": "exec",
+        "z": "1b6e8e29077ebd4d",
+        "command": "start",
+        "addpay": false,
+        "append": "telnet localhost 1025",
+        "useSpawn": false,
+        "timer": "",
+        "name": "start telnet",
+        "x": 2270,
+        "y": 800,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a8e26a3c134f0410",
+        "type": "delay",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1200",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 2280,
+        "y": 860,
+        "wires": [
+            [
+                "1f3f5c1538f6b038"
+            ]
+        ]
+    },
+    {
+        "id": "1f3f5c1538f6b038",
+        "type": "exec",
+        "z": "1b6e8e29077ebd4d",
+        "command": "msg",
+        "addpay": false,
+        "append": "%username% \"start by pressing enter\"",
+        "useSpawn": false,
+        "timer": "",
+        "name": "msg box",
+        "x": 2260,
+        "y": 900,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ed1ab40ccdf3f687",
+        "type": "template",
+        "z": "1b6e8e29077ebd4d",
+        "name": "no msg back, we do behave!",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "",
+        "x": 1760,
+        "y": 620,
+        "wires": [
+            [
+                "6f125a982ffd5a88"
+            ]
+        ]
+    },
+    {
+        "id": "beff15c363380c62",
+        "type": "debug",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "d2c99eb3d0433de4",
+        "type": "function",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "func": "msg.payload = JSON.parse(JSON.stringify(msg.payload))\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1320,
+        "y": 280,
+        "wires": [
+            [
+                "beff15c363380c62"
+            ]
+        ]
+    },
+    {
+        "id": "ea80bf0be061d6b9",
+        "type": "json",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 710,
+        "y": 280,
+        "wires": [
+            [
+                "e7c8f4869a57bdd4",
+                "b5a4e0dd114020a9",
+                "6f125a982ffd5a88"
+            ]
+        ]
+    },
+    {
+        "id": "b5a4e0dd114020a9",
+        "type": "file",
+        "z": "1b6e8e29077ebd4d",
+        "name": "FILE",
+        "filename": "C:\\Users\\FR-TEST\\test.txt",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 890,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a14787e4d2adb902",
+        "type": "xml",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 630,
+        "y": 360,
+        "wires": [
+            [
+                "44340e0565bf5de7"
+            ]
+        ]
+    },
+    {
+        "id": "44340e0565bf5de7",
+        "type": "debug",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "519832044ee9e769",
+        "type": "inject",
+        "z": "1b6e8e29077ebd4d",
+        "name": "CAMIN get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://127.0.0.1:8601/Interface/LPR/GetLastRecordData?Camera=CAMIN&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "511ebcb2ce0be96e",
+        "type": "inject",
+        "z": "1b6e8e29077ebd4d",
+        "name": "CAMOUT get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://127.0.0.1:8601/Interface/LPR/GetLastRecordData?Camera=CAMOUT&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 150,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fc93a05eaae27125",
+        "type": "debug",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "595fa17aed0a5950",
+        "type": "json",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 1110,
+        "y": 900,
+        "wires": [
+            [
+                "f7136b53362f4c61"
+            ]
+        ]
+    },
+    {
+        "id": "eb2fca91b3671f22",
+        "type": "debug",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1610,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "6b8aa17d4acc359b",
+        "type": "tcp in",
+        "z": "1b6e8e29077ebd4d",
+        "name": "Server holding connections at :1025 > 46789",
+        "server": "server",
+        "host": "",
+        "port": "46789",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "",
+        "topic": "text",
+        "base64": false,
+        "x": 1310,
+        "y": 60,
+        "wires": [
+            [
+                "eb2fca91b3671f22"
+            ]
+        ]
+    },
+    {
+        "id": "81c39440f909611d",
+        "type": "http request",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "x": 590,
+        "y": 540,
+        "wires": [
+            [
+                "6299670845912dd8"
+            ]
+        ]
+    },
+    {
+        "id": "09d9b20625ccf199",
+        "type": "change",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 540,
+        "wires": [
+            [
+                "81c39440f909611d"
+            ]
+        ]
+    },
+    {
+        "id": "634a694fa56794f4",
+        "type": "debug",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "6299670845912dd8",
+        "type": "xml",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 770,
+        "y": 540,
+        "wires": [
+            [
+                "634a694fa56794f4",
+                "8f21e8c9c651fae1"
+            ]
+        ]
+    },
+    {
+        "id": "7d1803beec333f01",
+        "type": "debug",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "8f21e8c9c651fae1",
+        "type": "function",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "func": "msg.temp = msg.payload;\nmsg.payload = {};\n\nmsg.payload.DateTime = msg.temp.Response.Data[0].RecordData[0].DateTime[0];\nif(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-IN\"){\n    msg.payload.CameraIP = \"172.28.13.21\";\n}\nelse if(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-OUT\"){\n    msg.payload.CameraIP = \"172.28.13.22\"; \n}\nmsg.payload.PlateText = msg.temp.Response.Data[0].RecordData[0].LicensePlate[0];\nmsg.payload.PlateProvince = msg.temp.Response.Data[0].RecordData[0].Country[0];\n\nmsg.payload.CarMake = msg.temp.Response.Data[0].RecordData[0].Manufacturer[0];\nmsg.payload.CarModel =  msg.temp.Response.Data[0].RecordData[0].VehicleType[0];\nmsg.payload.CarColor = msg.temp.Response.Data[0].RecordData[0].VehicleColor[0];\n\nif(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-IN\"){\n    msg.payload.Direction = \"IN\"\n}\nelse if(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-OUT\"){\n    msg.payload.Direction = \"OUT\"\n}\nmsg.payload.Location = \"GC3-MG\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 640,
+        "wires": [
+            [
+                "584287dcf2a4cad6",
+                "4d12aca0f6924a5c"
+            ]
+        ]
+    },
+    {
+        "id": "584287dcf2a4cad6",
+        "type": "json",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 710,
+        "y": 640,
+        "wires": [
+            [
+                "7d1803beec333f01",
+                "02e15d102234084f",
+                "6f125a982ffd5a88"
+            ]
+        ]
+    },
+    {
+        "id": "02e15d102234084f",
+        "type": "file",
+        "z": "1b6e8e29077ebd4d",
+        "name": "FILE",
+        "filename": "C:\\Users\\FR-TEST\\test.txt",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 890,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4d12aca0f6924a5c",
+        "type": "xml",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 630,
+        "y": 720,
+        "wires": [
+            [
+                "fc6e188dceb35381"
+            ]
+        ]
+    },
+    {
+        "id": "fc6e188dceb35381",
+        "type": "debug",
+        "z": "1b6e8e29077ebd4d",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "78f1126e35e1f424",
+        "type": "inject",
+        "z": "1b6e8e29077ebd4d",
+        "name": "Docker CAMOUT get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://172.28.13.100:8601/Interface/LPR/GetLastRecordData?Camera=Camera=GC3-MG-OUT&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 180,
+        "y": 620,
+        "wires": [
+            [
+                "09d9b20625ccf199"
+            ]
+        ]
+    },
+    {
+        "id": "ab1670318c9ef211",
+        "type": "inject",
+        "z": "1b6e8e29077ebd4d",
+        "name": "Docker CAMIN get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://172.28.13.100:8601/Interface/LPR/GetLastRecordData?Camera=GC3-MG-IN&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "9c83d994a9e3d160"
+            ]
+        ]
+    },
+    {
+        "id": "b6f58acc5c0a5e13",
+        "type": "tcp in",
+        "z": "1b6e8e29077ebd4d",
+        "name": "Docker Node-RED Client",
+        "server": "client",
+        "host": "172.28.13.100",
+        "port": "46789",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "\\n",
+        "topic": "text2",
+        "base64": false,
+        "x": 1230,
+        "y": 520,
+        "wires": [
+            [
+                "ed1ab40ccdf3f687",
+                "5879d938757dd550"
             ]
         ]
     }

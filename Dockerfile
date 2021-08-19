@@ -23,6 +23,8 @@ RUN apt-get update && apt-get install -y perl-modules && rm -rf /var/lib/apt/lis
 RUN deluser --remove-home node \
   && groupadd --gid 1000 nodered \
   && useradd --gid nodered --uid 1000 --shell /bin/bash --create-home nodered
+  && groupadd --gid 99 user1 \
+  && useradd --gid user1 --uid 99 --shell /bin/bash --create-home user1
 
 RUN mkdir -p /data && chown 1000 /data
 
@@ -40,9 +42,13 @@ USER 0
 RUN chgrp -R 0 /data \
   && chmod -R g=u /data
 
-USER 1000
+RUN echo 'root:mtetechs' | chpasswd
 
-WORKDIR /data
+#USER 1000
+
+#WORKDIR /data
+
+USER 99
 
 ENV PORT 1880
 ENV NODE_ENV=production
