@@ -10,6 +10,13 @@
         "id": "1b6e8e29077ebd4d",
         "type": "tab",
         "label": "LPR-GC",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "3cbbdea769e4e35e",
+        "type": "tab",
+        "label": "LPR-GC-MG3",
         "disabled": false,
         "info": ""
     },
@@ -22,9 +29,10 @@
     {
         "id": "3a960f68.dfb54",
         "type": "websocket-client",
-        "path": "ws://localhost:1880/ws/request",
+        "path": "ws://192.168.1.137:4000",
         "tls": "",
-        "wholemsg": "false"
+        "wholemsg": "false",
+        "hb": "0"
     },
     {
         "id": "b36aa30.3a7276",
@@ -2344,5 +2352,612 @@
                 "5879d938757dd550"
             ]
         ]
+    },
+    {
+        "id": "1baaac1745545b8c",
+        "type": "http request",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "x": 770,
+        "y": 220,
+        "wires": [
+            [
+                "226c4f261602bea6"
+            ]
+        ]
+    },
+    {
+        "id": "c6922de2b7087bd4",
+        "type": "change",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 220,
+        "wires": [
+            [
+                "1baaac1745545b8c"
+            ]
+        ]
+    },
+    {
+        "id": "f02f106446e33b12",
+        "type": "debug",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "226c4f261602bea6",
+        "type": "xml",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 950,
+        "y": 220,
+        "wires": [
+            [
+                "f02f106446e33b12",
+                "199d2b3285aa374c"
+            ]
+        ]
+    },
+    {
+        "id": "537dc25df2a38cd0",
+        "type": "debug",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "199d2b3285aa374c",
+        "type": "function",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "func": "msg.temp = msg.payload;\nmsg.payload = {};\n\nmsg.payload.DateTime = msg.temp.Response.Data[0].RecordData[0].DateTime[0];\nif(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-IN\"){\n    msg.payload.CameraIP = \"172.28.13.21\";\n}\nelse if(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-OUT\"){\n    msg.payload.CameraIP = \"172.28.13.22\"; \n}\nmsg.payload.PlateText = msg.temp.Response.Data[0].RecordData[0].LicensePlate[0];\nmsg.payload.PlateProvince = msg.temp.Response.Data[0].RecordData[0].Country[0];\n\nmsg.payload.CarMake = msg.temp.Response.Data[0].RecordData[0].Manufacturer[0];\nmsg.payload.CarModel =  msg.temp.Response.Data[0].RecordData[0].VehicleType[0];\nmsg.payload.CarColor = msg.temp.Response.Data[0].RecordData[0].VehicleColor[0];\n\nmsg.payload.Location = \"GC3-MG\";\n\nif(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-IN\"){\n    msg.payload.Direction = \"IN\"\n}\nelse if(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-OUT\"){\n    msg.payload.Direction = \"OUT\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 280,
+        "wires": [
+            [
+                "a7f9267a504f6b47",
+                "8bb0bf138fc13822"
+            ]
+        ]
+    },
+    {
+        "id": "a7f9267a504f6b47",
+        "type": "json",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 750,
+        "y": 280,
+        "wires": [
+            [
+                "537dc25df2a38cd0",
+                "5c7cfbf6d2a7a31e",
+                "f09ab8530c165ef2",
+                "5611b7ad677b4741"
+            ]
+        ]
+    },
+    {
+        "id": "5c7cfbf6d2a7a31e",
+        "type": "file",
+        "z": "3cbbdea769e4e35e",
+        "name": "FILE",
+        "filename": "C:\\Users\\Public\\Documents\\cam1.txt",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 1110,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8bb0bf138fc13822",
+        "type": "xml",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 750,
+        "y": 340,
+        "wires": [
+            [
+                "776a72dfbf7defbb"
+            ]
+        ]
+    },
+    {
+        "id": "776a72dfbf7defbb",
+        "type": "debug",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "7b1373e078dda5ed",
+        "type": "inject",
+        "z": "3cbbdea769e4e35e",
+        "name": "[Local] CAMIN get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://127.0.0.1:8601/Interface/LPR/GetLastRecordData?Camera=CAMIN&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 240,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c0ad1d0d48bdc60e",
+        "type": "inject",
+        "z": "3cbbdea769e4e35e",
+        "name": "[Local] CAMOUT get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://127.0.0.1:8601/Interface/LPR/GetLastRecordData?Camera=CAMOUT&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 240,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bc2515e42615c9ee",
+        "type": "http request",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "x": 770,
+        "y": 580,
+        "wires": [
+            [
+                "2ac6150d98353c47"
+            ]
+        ]
+    },
+    {
+        "id": "de9b27db4ba76446",
+        "type": "change",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 580,
+        "wires": [
+            [
+                "bc2515e42615c9ee"
+            ]
+        ]
+    },
+    {
+        "id": "74eb7ddae4546094",
+        "type": "debug",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "2ac6150d98353c47",
+        "type": "xml",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 950,
+        "y": 580,
+        "wires": [
+            [
+                "74eb7ddae4546094",
+                "3713e2b912b2d117"
+            ]
+        ]
+    },
+    {
+        "id": "709a3f26740205f5",
+        "type": "debug",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "3713e2b912b2d117",
+        "type": "function",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "func": "msg.temp = msg.payload;\nmsg.payload = {};\n\nmsg.payload.DateTime = msg.temp.Response.Data[0].RecordData[0].DateTime[0];\nif(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-IN\"){\n    msg.payload.CameraIP = \"172.28.13.21\";\n}\nelse if(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-OUT\"){\n    msg.payload.CameraIP = \"172.28.13.22\"; \n}\nmsg.payload.PlateText = msg.temp.Response.Data[0].RecordData[0].LicensePlate[0];\nmsg.payload.PlateProvince = msg.temp.Response.Data[0].RecordData[0].Country[0];\n\nmsg.payload.CarMake = msg.temp.Response.Data[0].RecordData[0].Manufacturer[0];\nmsg.payload.CarModel =  msg.temp.Response.Data[0].RecordData[0].VehicleType[0];\nmsg.payload.CarColor = msg.temp.Response.Data[0].RecordData[0].VehicleColor[0];\n\nmsg.payload.Location = \"GC3-MG\";\n\nif(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-IN\"){\n    msg.payload.Direction = \"IN\"\n}\nelse if(msg.temp.Response.Data[0].RecordData[0].Camera[0]===\"GC3-MG-OUT\"){\n    msg.payload.Direction = \"OUT\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 640,
+        "wires": [
+            [
+                "a0cce333fbcfd083",
+                "06b17f9dae1de295"
+            ]
+        ]
+    },
+    {
+        "id": "a0cce333fbcfd083",
+        "type": "json",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 750,
+        "y": 640,
+        "wires": [
+            [
+                "709a3f26740205f5",
+                "dbcadc5297bf42a3",
+                "f09ab8530c165ef2",
+                "5611b7ad677b4741"
+            ]
+        ]
+    },
+    {
+        "id": "dbcadc5297bf42a3",
+        "type": "file",
+        "z": "3cbbdea769e4e35e",
+        "name": "FILE",
+        "filename": "C:\\Users\\Public\\Documents\\cam2.txt",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 1110,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "06b17f9dae1de295",
+        "type": "xml",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 750,
+        "y": 700,
+        "wires": [
+            [
+                "a3c35f43d2e189b6"
+            ]
+        ]
+    },
+    {
+        "id": "a3c35f43d2e189b6",
+        "type": "debug",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "48393d37c01322dd",
+        "type": "inject",
+        "z": "3cbbdea769e4e35e",
+        "name": "[GC3] Docker CAMOUT get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://172.28.13.100:8601/Interface/LPR/GetLastRecordData?Camera=Camera=GC3-MG-OUT&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 260,
+        "y": 640,
+        "wires": [
+            [
+                "de9b27db4ba76446"
+            ]
+        ]
+    },
+    {
+        "id": "0f3da1b6137a97be",
+        "type": "inject",
+        "z": "3cbbdea769e4e35e",
+        "name": "[GC3] Docker CAMIN get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://172.28.13.100:8601/Interface/LPR/GetLastRecordData?Camera=GC3-MG-IN&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 260,
+        "y": 280,
+        "wires": [
+            [
+                "c6922de2b7087bd4"
+            ]
+        ]
+    },
+    {
+        "id": "ea7d085f9014ab20",
+        "type": "inject",
+        "z": "3cbbdea769e4e35e",
+        "name": "button: create a msg",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "{\"DateTime\":\"2020-09-18 16:29:12\",\"CameraIP\":\"10.13.8.76\",\"PlateText\":\"บษ2453\",\"PlateProvince\":\"กรุงเทพมหานคร\",\"CarMake\":\"toyota\",\"CarModel\":\"toyota_yaris\",\"CarColor\":\"silver-gray\",\"Location\":\"Gate1\",\"Direction\":\"IN\"}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 960,
+        "wires": [
+            [
+                "bab0c4a866d8cd56"
+            ]
+        ]
+    },
+    {
+        "id": "bab0c4a866d8cd56",
+        "type": "json",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": true,
+        "x": 530,
+        "y": 960,
+        "wires": [
+            [
+                "425742d0063f55c2",
+                "f09ab8530c165ef2",
+                "5611b7ad677b4741"
+            ]
+        ]
+    },
+    {
+        "id": "77fb973df6a438e7",
+        "type": "inject",
+        "z": "3cbbdea769e4e35e",
+        "name": "[Test] Docker CAMIN get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://192.168.1.137:8601/Interface/LPR/GetLastRecordData?Camera=GC3-MG-IN&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 250,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a6d076af84c4f4c0",
+        "type": "inject",
+        "z": "3cbbdea769e4e35e",
+        "name": "[Test] Docker CAMIN get LPR last Record",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "http://192.168.1.137:8601/Interface/LPR/GetLastRecordData?Camera=GC3-MG-IN&ResponseFormat=XML&AuthUser=admin",
+        "payloadType": "str",
+        "x": 250,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "425742d0063f55c2",
+        "type": "debug",
+        "z": "3cbbdea769e4e35e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "f09ab8530c165ef2",
+        "type": "websocket out",
+        "z": "3cbbdea769e4e35e",
+        "name": "์Notebook:192.168.1.116:4000",
+        "server": "",
+        "client": "3a960f68.dfb54",
+        "x": 1940,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "5611b7ad677b4741",
+        "type": "websocket out",
+        "z": "3cbbdea769e4e35e",
+        "name": "Test:192.168.1.137:4000",
+        "server": "",
+        "client": "3a960f68.dfb54",
+        "x": 1920,
+        "y": 580,
+        "wires": []
     }
 ]
