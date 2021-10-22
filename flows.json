@@ -2477,8 +2477,6 @@
         "wires": [
             [
                 "537dc25df2a38cd0",
-                "5c7cfbf6d2a7a31e",
-                "f09ab8530c165ef2",
                 "5611b7ad677b4741"
             ]
         ]
@@ -2493,8 +2491,8 @@
         "createDir": false,
         "overwriteFile": "true",
         "encoding": "utf8",
-        "x": 1110,
-        "y": 340,
+        "x": 950,
+        "y": 400,
         "wires": [
             []
         ]
@@ -2527,7 +2525,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1130,
+        "x": 770,
         "y": 400,
         "wires": []
     },
@@ -2709,8 +2707,6 @@
         "wires": [
             [
                 "709a3f26740205f5",
-                "dbcadc5297bf42a3",
-                "f09ab8530c165ef2",
                 "5611b7ad677b4741"
             ]
         ]
@@ -2725,8 +2721,8 @@
         "createDir": false,
         "overwriteFile": "true",
         "encoding": "utf8",
-        "x": 1110,
-        "y": 700,
+        "x": 950,
+        "y": 780,
         "wires": [
             []
         ]
@@ -2759,8 +2755,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1130,
-        "y": 760,
+        "x": 770,
+        "y": 780,
         "wires": []
     },
     {
@@ -2858,9 +2854,7 @@
         "y": 960,
         "wires": [
             [
-                "425742d0063f55c2",
-                "f09ab8530c165ef2",
-                "5611b7ad677b4741"
+                "425742d0063f55c2"
             ]
         ]
     },
